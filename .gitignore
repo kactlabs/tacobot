@@ -2,6 +2,7 @@
 # Go build artifacts
 bin/
 build/
+pkg/
 *.exe
 *.dll
 *.so
@@ -11,6 +12,10 @@ build/
 /picoclaw
 /picoclaw-test
 cmd/picoclaw/workspace
+
+# Rust build artifacts
+target/
+Cargo.lock
 
 # Picoclaw specific
 
