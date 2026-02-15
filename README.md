@@ -123,34 +123,33 @@ tacobot cron list
 ## 🤖 Supported LLM Providers
 
 - OpenAI (GPT-4, GPT-4 Mini, GPT-3.5)
-- Anthropic Claude
-- OpenRouter
-- Google Gemini
-- Zhipu (智谱)
-- DeepSeek
-- Groq
-- And more...
+- Anthropic Claude (To be implemented soon)
+- OpenRouter (To be implemented soon)
+- Google Gemini (To be implemented soon)
+- Zhipu (智谱) (To be implemented soon)
+- DeepSeek (To be implemented soon)
+- Groq (To be implemented soon)
 
 ## 💬 Supported Channels
 
-- Telegram
-- Discord
-- DingTalk
-- LINE
-- QQ
-- WhatsApp
-- Slack
-- Feishu
+- Telegram (TBI - To be implemented)
+- Discord (TBI - To be implemented)
+- DingTalk (TBI - To be implemented)
+- LINE (TBI - To be implemented)
+- QQ (TBI - To be implemented)
+- WhatsApp (TBI - To be implemented)
+- Slack (TBI - To be implemented)
+- Feishu (TBI - To be implemented)
 
 ## 🔧 Available Tools
 
-- **Web Search**: Brave Search, DuckDuckGo
-- **Filesystem**: Read, write, list files with workspace isolation
-- **Shell**: Execute commands with timeout and whitelist
-- **Web Access**: Fetch and parse web content
-- **Hardware**: I2C and SPI device control
-- **Message**: Send messages to channels
-- **Cron**: Schedule automated tasks
+- **Web Search**: Brave Search, DuckDuckGo (TBI - To be implemented)
+- **Filesystem**: Read, write, list files with workspace isolation (TBI - To be implemented)
+- **Shell**: Execute commands with timeout and whitelist (TBI - To be implemented)
+- **Web Access**: Fetch and parse web content (TBI - To be implemented)
+- **Hardware**: I2C and SPI device control (TBI - To be implemented)
+- **Message**: Send messages to channels (TBI - To be implemented)
+- **Cron**: Schedule automated tasks (TBI - To be implemented)
 
 ## ⚙️ Configuration
 
