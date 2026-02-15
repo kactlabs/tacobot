@@ -119,6 +119,8 @@ Download the firmware for your platform from the [release](https://github.com/si
 
 ### Install from source (latest features, recommended for development)
 
+#### Go Version (Original)
+
 ```bash
 git clone https://github.com/sipeed/picoclaw.git
 
@@ -134,6 +136,122 @@ make build-all
 # Build And Install
 make install
 ```
+
+#### Rust Version (New - Recommended for embedded systems)
+
+The Rust version provides better performance and smaller binary size for embedded deployment.
+
+**Prerequisites:**
+- Install Rust from https://rustup.rs/
+
+**Build:**
+
+```bash
+# Build in release mode (optimized for embedded)
+cargo build --release
+
+# Binary location: target/release/picoclaw
+```
+
+**Run:**
+
+```bash
+# Show help
+./target/release/picoclaw --help
+
+# Run with default config
+./target/release/picoclaw
+
+# Run with custom config
+./target/release/picoclaw --config /path/to/config.yaml
+
+# Run with debug logging
+./target/release/picoclaw --log-level debug
+
+# Show version
+./target/release/picoclaw --version
+```
+
+**Development:**
+
+```bash
+# Build in debug mode (faster compilation)
+cargo build
+
+# Run tests
+cargo test
+
+# Run tests with output
+cargo test -- --nocapture
+
+# Run property-based tests
+cargo test --test '*' -- --nocapture
+
+# Watch for changes and rebuild (requires cargo-watch)
+cargo watch -x build
+```
+
+**Configuration:**
+
+Create a `config.yaml` file:
+
+```yaml
+agent:
+  max_context_size: 8192
+  timeout_ms: 5000
+  memory_limit_mb: 10
+
+channels:
+  telegram:
+    enabled: true
+    token: "${TELEGRAM_TOKEN}"
+  discord:
+    enabled: true
+    token: "${DISCORD_TOKEN}"
+
+llm:
+  default_provider: "openrouter"
+  providers:
+    openrouter:
+      api_key: "${OPENROUTER_API_KEY}"
+      model: "meta-llama/llama-2-70b-chat"
+
+logging:
+  level: "info"
+  format: "json"
+```
+
+**Environment variables:**
+
+```bash
+export TELEGRAM_TOKEN="your_token"
+export DISCORD_TOKEN="your_token"
+export OPENROUTER_API_KEY="your_key"
+
+./target/release/picoclaw --config config.yaml
+```
+
+**Features:**
+
+The Rust version includes all core functionality with optimizations for embedded systems:
+
+- ✅ Async runtime with tokio
+- ✅ Configuration management (YAML/TOML/JSON)
+- ✅ OAuth2 and PKCE authentication
+- ✅ Channel integrations (Telegram, Discord, DingTalk, LINE, QQ, WhatsApp)
+- ✅ LLM providers (OpenRouter, Claude, OpenAI, Gemini, Zhipu, DeepSeek, Groq)
+- ✅ Tools (web search, filesystem, shell, web access, hardware I2C/SPI, message, cron)
+- ✅ Session and state management
+- ✅ Memory management with eviction policies
+- ✅ Device manager for hardware interfaces
+- ✅ Comprehensive error handling and logging
+- ✅ Property-based testing for correctness validation
+
+**Performance targets:**
+
+- Boot time: <1 second
+- Memory usage: <10MB
+- Binary size: ~1.4MB (optimized for embedded)
 
 ## 🐳 Docker Compose
 
