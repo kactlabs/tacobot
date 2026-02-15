@@ -1,44 +1,13 @@
-# Binaries
-# Go build artifacts
-bin/
-build/
-pkg/
-*.exe
-*.dll
-*.so
-*.dylib
-*.test
-*.out
-/picoclaw
-/picoclaw-test
-cmd/picoclaw/workspace
-
 # Rust build artifacts
 target/
 Cargo.lock
 
-# Picoclaw specific
+# TacoBot specific
+.tacobot/
+config.yaml
 
-# PicoClaw
-.picoclaw/
-config.json
-sessions/
-build/
-
-# Coverage
-
-# Secrets & Config (keep templates, ignore actual secrets)
+# Secrets & Config
 .env
-config/config.json
-
-# Test
-coverage.txt
-coverage.html
 
 # OS
 .DS_Store
-
-# Ralph workspace
-ralph/
-.ralph/
-tasks/
