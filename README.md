@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1>TacoBot: Ultra-Efficient AI Assistant in Rust</h1>
+  <h1>TakoBull: Ultra-Efficient AI Assistant in Rust</h1>
 
   <h3>$10 Hardware · 10MB RAM · 1s Boot · 🤖 Powered by Rust</h3>
 
@@ -13,7 +13,7 @@
 
 ---
 
-🤖 **TacoBot** is an ultra-lightweight personal AI Assistant, a high-performance Rust port of PicoClaw. Originally built in Go, TacoBot has been rewritten in Rust to achieve even better performance, memory efficiency, and safety guarantees while maintaining full feature parity.
+🤖 **TakoBull** is an ultra-lightweight personal AI Assistant, a high-performance Rust port of PicoClaw. Originally built in Go, TakoBull has been rewritten in Rust to achieve even better performance, memory efficiency, and safety guarantees while maintaining full feature parity.
 
 ⚡️ Runs on $10 hardware with <10MB RAM: That's 99% less memory than traditional AI assistants and 98% cheaper than a Mac mini!
 
@@ -29,7 +29,7 @@
 
 ⚡ **High Performance**: Memory-safe, high-performance implementation with zero-cost abstractions.
 
-|                               | Traditional AI | PicoClaw (Go)            | **TacoBot (Rust)**                        |
+|                               | Traditional AI | PicoClaw (Go)            | **TakoBull (Rust)**                        |
 | ----------------------------- | -------------- | ------------------------ | ----------------------------------------- |
 | **Language**                  | TypeScript     | Go                       | **Rust**                                  |
 | **RAM**                       | >1GB           | <10MB                    | **<10MB**                                 |
@@ -47,13 +47,13 @@
 
 ```bash
 # Clone the repository
-git clone git@github.com:kactlabs/tacobot.git
-cd tacobot
+git clone git@github.com:kactlabs/takobull.git
+cd takobull
 
 # Build in release mode (optimized for embedded)
 cargo build --release
 
-# Binary location: target/release/tacobot
+# Binary location: target/release/takobull
 ```
 
 ### Install Globally
@@ -63,7 +63,7 @@ cargo build --release
 cargo install --path .
 
 # Now you can run from anywhere:
-tacobot agent -m "What is 2+2?"
+takobull agent -m "What is 2+2?"
 ```
 
 ## 🚀 Quick Start
@@ -71,21 +71,21 @@ tacobot agent -m "What is 2+2?"
 ### 1. Initialize Workspace
 
 ```bash
-tacobot onboard
+takobull onboard
 ```
 
-This creates `~/.tacobot/` with default configuration.
+This creates `~/.takobull/` with default configuration.
 
 ### 2. Configure Your LLM Provider
 
-Edit `~/.tacobot/config.yaml` and set your API key:
+Edit `~/.takobull/config.yaml` and set your API key:
 
 ```yaml
 agents:
   defaults:
     provider: openai
     model: gpt-4-mini
-    workspace: ~/.tacobot/workspace
+    workspace: ~/.takobull/workspace
 
 providers:
   openai:
@@ -97,28 +97,28 @@ providers:
 
 ```bash
 # Send a message
-tacobot agent -m "Write a Python function to sort a list"
+takobull agent -m "Write a Python function to sort a list"
 
 # Start the gateway (for channel integrations)
-tacobot gateway
+takobull gateway
 
 # Check system status
-tacobot status
+takobull status
 
 # Manage scheduled tasks
-tacobot cron list
+takobull cron list
 ```
 
 ## �️ CLI Commands
 
 | Command                   | Description                   |
 | ------------------------- | ----------------------------- |
-| `tacobot onboard`         | Initialize config & workspace |
-| `tacobot agent -m "..."` | Chat with the agent           |
-| `tacobot agent`           | Interactive chat mode         |
-| `tacobot gateway`         | Start the gateway             |
-| `tacobot status`          | Show system status            |
-| `tacobot cron list`       | List all scheduled jobs       |
+| `takobull onboard`         | Initialize config & workspace |
+| `takobull agent -m "..."` | Chat with the agent           |
+| `takobull agent`           | Interactive chat mode         |
+| `takobull gateway`         | Start the gateway             |
+| `takobull status`          | Show system status            |
+| `takobull cron list`       | List all scheduled jobs       |
 
 ## 🤖 Supported LLM Providers
 
@@ -153,14 +153,14 @@ tacobot cron list
 
 ## ⚙️ Configuration
 
-Config file: `~/.tacobot/config.yaml`
+Config file: `~/.takobull/config.yaml`
 
 ### Workspace Layout
 
-TacoBot stores data in your configured workspace (default: `~/.tacobot/workspace`):
+TakoBull stores data in your configured workspace (default: `~/.takobull/workspace`):
 
 ```
-~/.tacobot/workspace/
+~/.takobull/workspace/
 ├── sessions/          # Conversation sessions and history
 ├── memory/           # Long-term memory
 ├── state/            # Persistent state
@@ -171,18 +171,18 @@ TacoBot stores data in your configured workspace (default: `~/.tacobot/workspace
 
 ### 🔒 Security Sandbox
 
-TacoBot runs in a sandboxed environment by default. The agent can only access files and execute commands within the configured workspace.
+TakoBull runs in a sandboxed environment by default. The agent can only access files and execute commands within the configured workspace.
 
 ```yaml
 agents:
   defaults:
-    workspace: ~/.tacobot/workspace
+    workspace: ~/.takobull/workspace
     restrict_to_workspace: true
 ```
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `workspace` | `~/.tacobot/workspace` | Working directory for the agent |
+| `workspace` | `~/.takobull/workspace` | Working directory for the agent |
 | `restrict_to_workspace` | `true` | Restrict file/command access to workspace |
 
 #### Protected Tools
@@ -209,17 +209,17 @@ agents:
 
 ## 🐳 Docker Support
 
-TacoBot can be deployed using Docker for consistent environments:
+TakoBull can be deployed using Docker for consistent environments:
 
 ```bash
 # Build Docker image
-docker build -t tacobot:latest .
+docker build -t takobull:latest .
 
 # Run with configuration
-docker run -v ~/.tacobot:/root/.tacobot tacobot:latest agent -m "What is 2+2?"
+docker run -v ~/.takobull:/root/.takobull takobull:latest agent -m "What is 2+2?"
 
 # Run gateway for channel integrations
-docker run -v ~/.tacobot:/root/.tacobot -p 18790:18790 tacobot:latest gateway
+docker run -v ~/.takobull:/root/.takobull -p 18790:18790 takobull:latest gateway
 ```
 
 ## 🧪 Development
@@ -257,7 +257,7 @@ All 39 tasks completed across 6 phases:
 
 ### API key not configured
 
-Make sure your `~/.tacobot/config.yaml` has the correct API key for your chosen provider:
+Make sure your `~/.takobull/config.yaml` has the correct API key for your chosen provider:
 
 ```yaml
 providers:
@@ -267,12 +267,12 @@ providers:
 
 ### Web search not working
 
-This is normal if you haven't configured a search API key yet. TacoBot will automatically fall back to DuckDuckGo.
+This is normal if you haven't configured a search API key yet. TakoBull will automatically fall back to DuckDuckGo.
 
 To enable Brave Search:
 
 1. Get a free API key at [https://brave.com/search/api](https://brave.com/search/api) (2000 free queries/month)
-2. Add to `~/.tacobot/config.yaml`:
+2. Add to `~/.takobull/config.yaml`:
 
 ```yaml
 tools:

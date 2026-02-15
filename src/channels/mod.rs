@@ -1,4 +1,4 @@
-//! Channel integrations for TacoBot
+//! Channel integrations for TakoBull
 
 pub mod framework;
 

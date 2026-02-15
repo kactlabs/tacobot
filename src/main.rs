@@ -1,6 +1,6 @@
-//! TacoBot CLI entry point
+//! TakoBull CLI entry point
 //!
-//! This is the main executable for TacoBot, providing command-line interface
+//! This is the main executable for TakoBull, providing command-line interface
 //! and initialization of the system.
 
 use clap::{Parser, Subcommand};
@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use tracing::info;
 
 #[derive(Parser, Debug)]
-#[command(name = "tacobot")]
+#[command(name = "takobull")]
 #[command(about = "Ultra-lightweight personal AI Assistant for embedded systems", long_about = None)]
 #[command(version)]
 #[command(author)]
@@ -72,7 +72,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize logging
     picoclaw::logging::setup::init_logging(&args.log_level)?;
 
-    info!("Starting TacoBot v{}", env!("CARGO_PKG_VERSION"));
+    info!("Starting TakoBull v{}", env!("CARGO_PKG_VERSION"));
     if let Some(config_path) = &args.config {
         info!("Configuration file: {:?}", config_path);
     }
@@ -95,9 +95,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         None => {
             // Default: show help
-            println!("TacoBot v{}", env!("CARGO_PKG_VERSION"));
+            println!("TakoBull v{}", env!("CARGO_PKG_VERSION"));
             println!("Ultra-lightweight personal AI Assistant for embedded systems");
-            println!("\nUsage: tacobot [OPTIONS] <COMMAND>");
+            println!("\nUsage: takobull [OPTIONS] <COMMAND>");
             println!("\nCommands:");
             println!("  agent    Chat with the agent");
             println!("  gateway  Start the gateway for channel integrations");
@@ -113,7 +113,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    info!("TacoBot completed successfully");
+    info!("TakoBull completed successfully");
 
     Ok(())
 }
@@ -123,12 +123,12 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
 
     // Load config
     let home = std::env::var("HOME")?;
-    let config_path = format!("{}/.tacobot/config.yaml", home);
-    let workspace_path = format!("{}/.tacobot/workspace", home);
+    let config_path = format!("{}/.takobull/config.yaml", home);
+    let workspace_path = format!("{}/.takobull/workspace", home);
     
     if !std::path::Path::new(&config_path).exists() {
         eprintln!("❌ Config not found: {}", config_path);
-        eprintln!("Run 'tacobot onboard' first to initialize");
+        eprintln!("Run 'takobull onboard' first to initialize");
         return Err("Config file not found".into());
     }
 
@@ -167,7 +167,7 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
         
         if api_key.is_empty() {
             eprintln!("❌ API key not configured for provider: {}", provider);
-            eprintln!("Set the API key in ~/.tacobot/config.yaml under providers.{}.api_key", provider);
+            eprintln!("Set the API key in ~/.takobull/config.yaml under providers.{}.api_key", provider);
             return Err("API key not configured".into());
         }
         
@@ -198,7 +198,7 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
         }
     } else {
         info!("Starting interactive agent mode");
-        println!("🤖 TacoBot Interactive Mode");
+        println!("🤖 TakoBull Interactive Mode");
         println!("Type 'exit' to quit\n");
         
         // TODO: Start interactive REPL
@@ -218,7 +218,7 @@ async fn handle_gateway() -> Result<(), Box<dyn std::error::Error>> {
 
 async fn handle_status() -> Result<(), Box<dyn std::error::Error>> {
     info!("Showing status");
-    println!("TacoBot v{}", env!("CARGO_PKG_VERSION"));
+    println!("TakoBull v{}", env!("CARGO_PKG_VERSION"));
     println!("Status: OK");
     // TODO: Show actual status information
     Ok(())
@@ -247,8 +247,8 @@ async fn handle_onboard() -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting onboard process");
     
     let home = std::env::var("HOME")?;
-    let workspace_dir = format!("{}/.tacobot/workspace", home);
-    let config_path = format!("{}/.tacobot/config.yaml", home);
+    let workspace_dir = format!("{}/.takobull/workspace", home);
+    let config_path = format!("{}/.takobull/config.yaml", home);
     
     // Create workspace directory
     std::fs::create_dir_all(&workspace_dir)?;
@@ -263,12 +263,12 @@ async fn handle_onboard() -> Result<(), Box<dyn std::error::Error>> {
     
     // Create default config if it doesn't exist
     if !std::path::Path::new(&config_path).exists() {
-        let default_config = r#"# TacoBot Configuration
+        let default_config = r#"# TakoBull Configuration
 # Ultra-lightweight personal AI Assistant for embedded systems
 
 agents:
   defaults:
-    workspace: "~/.tacobot/workspace"
+    workspace: "~/.takobull/workspace"
     restrict_to_workspace: true
     provider: "openrouter"
     model: "meta-llama/llama-2-70b-chat"
@@ -348,7 +348,7 @@ logging:
     println!("\nNext steps:");
     println!("1. Edit config: {}", config_path);
     println!("2. Set your API keys (OPENROUTER_API_KEY, etc.)");
-    println!("3. Run: tacobot agent -m \"Hello\"");
+    println!("3. Run: takobull agent -m \"Hello\"");
     
     info!("Onboarding completed successfully");
     Ok(())

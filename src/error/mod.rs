@@ -1,4 +1,4 @@
-//! Error types and handling for TacoBot
+//! Error types and handling for TakoBull
 
 use thiserror::Error;
 
@@ -6,10 +6,10 @@ pub mod types;
 
 pub use types::PicoClawError;
 
-/// Result type for TacoBot operations
+/// Result type for TakoBull operations
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Main error type for TacoBot
+/// Main error type for TakoBull
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Configuration error: {0}")]

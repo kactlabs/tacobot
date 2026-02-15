@@ -1,4 +1,4 @@
-//! Async runtime management for TacoBot
+//! Async runtime management for TakoBull
 //!
 //! This module provides:
 //! - Tokio async runtime initialization and configuration
@@ -33,7 +33,7 @@ impl Default for RuntimeConfig {
         Self {
             worker_threads: num_cpus::get(),
             max_blocking_threads: 512,
-            thread_name_prefix: "tacobot-worker".to_string(),
+            thread_name_prefix: "takobull-worker".to_string(),
             stack_size: 2 * 1024 * 1024, // 2MB
         }
     }

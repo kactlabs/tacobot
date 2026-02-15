@@ -1,4 +1,4 @@
-//! OAuth2 implementation for TacoBot
+//! OAuth2 implementation for TakoBull
 
 use serde::{Deserialize, Serialize};
 

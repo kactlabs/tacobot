@@ -1,4 +1,4 @@
-//! Session management for TacoBot
+//! Session management for TakoBull
 
 pub mod manager;
 pub mod store;

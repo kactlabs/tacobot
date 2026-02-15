@@ -1,8 +1,8 @@
-//! Detailed error types for TacoBot
+//! Detailed error types for TakoBull
 
 use std::fmt;
 
-/// Detailed error information for TacoBot operations
+/// Detailed error information for TakoBull operations
 #[derive(Debug, Clone)]
 pub struct PicoClawError {
     pub code: ErrorCode,

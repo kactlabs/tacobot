@@ -4,7 +4,7 @@ version = "0.2.0"
 edition = "2021"
 description = "Ultra-lightweight personal AI Assistant for embedded systems - Rust port"
 license = "MIT"
-repository = "https://github.com/kactlabs/tacobot"
+repository = "https://github.com/kactlabs/takobull"
 
 [dependencies]
 # Async runtime
@@ -141,7 +141,7 @@ panic = "abort"
 opt-level = 0
 
 [[bin]]
-name = "tacobot"
+name = "takobull"
 path = "src/main.rs"
 
 [lib]

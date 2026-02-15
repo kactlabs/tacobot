@@ -1,4 +1,4 @@
-//! TacoBot - Ultra-lightweight personal AI Assistant for embedded systems
+//! TakoBull - Ultra-lightweight personal AI Assistant for embedded systems
 //!
 //! This library provides the core functionality for TacoBot, including:
 //! - Async runtime management
