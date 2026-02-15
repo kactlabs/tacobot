@@ -79,3 +79,98 @@ impl fmt::Display for PicoClawError {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_error_creation() {
+        let error = PicoClawError::new(ErrorCode::ConfigNotFound, "config.yaml not found");
+        assert_eq!(error.code, ErrorCode::ConfigNotFound);
+        assert_eq!(error.message, "config.yaml not found");
+        assert!(error.context.is_none());
+    }
+
+    #[test]
+    fn test_error_with_context() {
+        let error = PicoClawError::new(ErrorCode::ConfigInvalid, "invalid config format")
+            .with_context("at line 42");
+        assert_eq!(error.code, ErrorCode::ConfigInvalid);
+        assert_eq!(error.message, "invalid config format");
+        assert_eq!(error.context, Some("at line 42".to_string()));
+    }
+
+    #[test]
+    fn test_error_display_without_context() {
+        let error = PicoClawError::new(ErrorCode::AuthFailed, "authentication failed");
+        let display_str = format!("{}", error);
+        assert!(display_str.contains("2001"));
+        assert!(display_str.contains("authentication failed"));
+        assert!(!display_str.contains("("));
+    }
+
+    #[test]
+    fn test_error_display_with_context() {
+        let error = PicoClawError::new(ErrorCode::TokenExpired, "token expired")
+            .with_context("user_id: 123");
+        let display_str = format!("{}", error);
+        assert!(display_str.contains("2002"));
+        assert!(display_str.contains("token expired"));
+        assert!(display_str.contains("user_id: 123"));
+    }
+
+    #[test]
+    fn test_error_context_capture() {
+        let error = PicoClawError::new(ErrorCode::ChannelConnectionFailed, "connection timeout")
+            .with_context("telegram channel, attempt 3");
+        
+        assert!(error.context.is_some());
+        assert_eq!(error.context.unwrap(), "telegram channel, attempt 3");
+    }
+
+    #[test]
+    fn test_error_context_override() {
+        let error = PicoClawError::new(ErrorCode::ProviderUnavailable, "provider down")
+            .with_context("first context")
+            .with_context("second context");
+        
+        // Last context should override
+        assert_eq!(error.context, Some("second context".to_string()));
+    }
+
+    #[test]
+    fn test_error_code_values() {
+        assert_eq!(ErrorCode::ConfigNotFound as u32, 1001);
+        assert_eq!(ErrorCode::AuthFailed as u32, 2001);
+        assert_eq!(ErrorCode::ChannelNotFound as u32, 3001);
+        assert_eq!(ErrorCode::ProviderNotFound as u32, 4001);
+        assert_eq!(ErrorCode::ToolNotFound as u32, 5001);
+        assert_eq!(ErrorCode::SessionNotFound as u32, 6001);
+        assert_eq!(ErrorCode::DeviceNotFound as u32, 7001);
+        assert_eq!(ErrorCode::InternalError as u32, 9001);
+        assert_eq!(ErrorCode::Unknown as u32, 9999);
+    }
+
+    #[test]
+    fn test_error_clone() {
+        let error = PicoClawError::new(ErrorCode::ToolExecutionFailed, "tool failed")
+            .with_context("tool: shell");
+        let cloned = error.clone();
+        
+        assert_eq!(cloned.code, error.code);
+        assert_eq!(cloned.message, error.message);
+        assert_eq!(cloned.context, error.context);
+    }
+
+    #[test]
+    fn test_error_debug_format() {
+        let error = PicoClawError::new(ErrorCode::SessionExpired, "session expired")
+            .with_context("session_id: abc123");
+        let debug_str = format!("{:?}", error);
+        
+        assert!(debug_str.contains("PicoClawError"));
+        assert!(debug_str.contains("SessionExpired"));
+        assert!(debug_str.contains("session expired"));
+    }
+}

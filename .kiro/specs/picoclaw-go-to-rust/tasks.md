@@ -1,8 +1,14 @@
-# Implementation Plan: PicoClaw Go-to-Rust Conversion
+# Implementation Plan: TacoBot Go-to-Rust Conversion
 
 ## Overview
 
-This implementation plan breaks down the PicoClaw Go-to-Rust conversion into discrete, testable coding tasks organized across 6 phases. Each phase delivers a complete, independently functional subsystem. Tasks are ordered to build incrementally, with each task building on previous work. Property-based tests are integrated throughout to validate correctness properties early.
+This implementation plan breaks down the TacoBot Go-to-Rust conversion into discrete, testable coding tasks organized across 6 phases. Each phase delivers a complete, independently functional subsystem. Tasks are ordered to build incrementally, with each task building on previous work. Property-based tests are integrated throughout to validate correctness properties early.
+
+## Important: Go Codebase is Reference-Only
+
+**The Go codebase (`cmd/` and `pkg/` directories) MUST NOT be modified. It serves as a reference implementation only.**
+
+All implementation work must be done exclusively in the Rust codebase (`src/` directory). When implementing Rust code, use "tacobot" as the project/crate name instead of "picoclaw".
 
 ## Phase 1: Core Infrastructure (Weeks 1-2)
 
@@ -13,51 +19,51 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
   - Create src/lib.rs and src/main.rs entry points
   - _Requirements: 2.1, 30.1, 30.2, 30.3, 30.4_
 
-- [ ] 2. Implement async runtime initialization
+- [x] 2. Implement async runtime initialization
   - Create src/runtime/mod.rs with tokio runtime setup
   - Implement graceful shutdown mechanism for all async tasks
   - Create task pool for managing concurrent operations
   - _Requirements: 2.1, 2.2, 2.4, 2.5_
 
-  - [ ]* 2.1 Write property test for runtime initialization
+  - [x] 2.1 Write property test for runtime initialization
     - **Property 2: Runtime initialization within 100ms**
     - **Validates: Requirements 2.2**
 
-  - [ ]* 2.2 Write property test for async error propagation
+  - [x]* 2.2 Write property test for async error propagation
     - **Property 3: Error handling for async failures**
     - **Validates: Requirements 2.3**
 
-  - [ ]* 2.3 Write property test for graceful shutdown
+  - [x]* 2.3 Write property test for graceful shutdown
     - **Property 4: Graceful shutdown completeness**
     - **Validates: Requirements 2.4**
 
-- [ ] 3. Implement configuration management system
+- [x] 3. Implement configuration management system
   - Create src/config/mod.rs with Config struct
   - Implement YAML/TOML file loading in src/config/loader.rs
   - Implement environment variable override logic
   - Create configuration validation in src/config/schema.rs
   - _Requirements: 3.1, 3.2, 3.4, 3.5_
 
-  - [ ]* 3.1 Write property test for config round-trip
+  - [x]* 3.1 Write property test for config round-trip
     - **Property 1: Configuration round-trip consistency**
     - **Validates: Requirements 3.1, 3.5**
 
-  - [ ]* 3.2 Write property test for env var overrides
+  - [x]* 3.2 Write property test for env var overrides
     - **Property 2: Environment variable override**
     - **Validates: Requirements 3.2**
 
-  - [ ]* 3.3 Write unit test for invalid config handling
+  - [x]* 3.3 Write unit test for invalid config handling
     - Test specific invalid configs return descriptive errors
     - _Requirements: 3.3_
 
-- [ ] 4. Implement logging and error handling framework
+- [x] 4. Implement logging and error handling framework
   - Create src/error/types.rs with comprehensive error types
   - Create src/logging/setup.rs with tracing initialization
   - Implement structured logging with multiple output targets
   - Create error context capture for debugging
   - _Requirements: 25.1, 25.2, 25.3, 25.4_
 
-  - [ ]* 4.1 Write unit test for error context capture
+  - [x]* 4.1 Write unit test for error context capture
     - Test that error context is captured correctly
     - _Requirements: 25.2_
 
@@ -65,7 +71,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 25: Log level filtering**
     - **Validates: Requirements 25.3**
 
-- [ ] 5. Implement CLI interface and argument parsing
+- [x] 5. Implement CLI interface and argument parsing
   - Create src/main.rs with clap-based CLI argument parsing
   - Implement same command-line interface as Go version
   - Implement help text and usage information
@@ -80,7 +86,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 30: Exit code consistency**
     - **Validates: Requirements 26.4**
 
-- [ ] 6. Checkpoint - Verify core infrastructure
+- [x] 6. Checkpoint - Verify core infrastructure
   - Ensure all tests pass
   - Verify binary compiles and runs
   - Check memory usage is under 10MB
@@ -88,14 +94,14 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
 
 ## Phase 2: Authentication and Agent Loop (Weeks 3-4)
 
-- [ ] 7. Implement OAuth2 and PKCE authentication
+- [x] 7. Implement OAuth2 and PKCE authentication
   - Create src/auth/mod.rs with OAuth2 types
   - Implement PKCE challenge generation in src/auth/pkce.rs
   - Implement OAuth2 flow in src/auth/oauth2.rs
   - Implement token storage in src/auth/token_storage.rs
   - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-  - [ ]* 7.1 Write property test for PKCE challenge validity
+  - [x]* 7.1 Write property test for PKCE challenge validity
     - **Property 3: PKCE challenge validity**
     - **Validates: Requirements 4.1, 4.2**
 
@@ -107,7 +113,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 5: Concurrent session isolation**
     - **Validates: Requirements 4.5**
 
-- [ ] 8. Implement session and state management
+- [x] 8. Implement session and state management
   - Create src/session/manager.rs with SessionManager
   - Implement session persistence in src/session/store.rs
   - Implement session metadata handling
@@ -122,7 +128,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 20: Session persistence round-trip**
     - **Validates: Requirements 23.2, 23.3**
 
-- [ ] 9. Implement memory management subsystem
+- [x] 9. Implement memory management subsystem
   - Create src/agent/memory.rs with MemoryManager
   - Implement conversation history with size limits
   - Implement eviction policies (time-based, size-based)
@@ -137,7 +143,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 8: History size enforcement**
     - **Validates: Requirements 22.2**
 
-- [ ] 10. Implement device manager
+- [x] 10. Implement device manager
   - Create src/device/manager.rs with DeviceManager
   - Implement device discovery in src/device/mod.rs
   - Implement I2C interface in src/device/i2c.rs
@@ -148,7 +154,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 22: Device registry consistency**
     - **Validates: Requirements 24.2, 24.3**
 
-- [ ] 11. Implement agent loop and context management
+- [x] 11. Implement agent loop and context management
   - Create src/agent/loop.rs with AgentLoop
   - Implement context creation in src/agent/context.rs
   - Implement message processing pipeline
@@ -168,7 +174,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 27: Error isolation**
     - **Validates: Requirements 5.5, 28.3**
 
-- [ ] 12. Checkpoint - Verify authentication and agent loop
+- [x] 12. Checkpoint - Verify authentication and agent loop
   - Ensure all tests pass
   - Verify agent loop processes messages correctly
   - Verify session persistence works
@@ -176,7 +182,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
 
 ## Phase 3: Channel Integrations (Weeks 5-7)
 
-- [ ] 13. Implement channel framework and abstractions
+- [x] 13. Implement channel framework and abstractions
   - Create src/channels/framework.rs with Channel trait
   - Implement ChannelManager in src/channels/mod.rs
   - Implement message normalization
@@ -199,7 +205,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 26: Channel reconnection success**
     - **Validates: Requirements 6.6, 28.1**
 
-- [ ] 14. Implement Telegram channel integration
+- [x] 14. Implement Telegram channel integration
   - Create src/channels/telegram.rs with TelegramChannel
   - Implement message receiving (polling and webhook modes)
   - Implement message sending with formatting
@@ -210,7 +216,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test message receiving and sending
     - _Requirements: 7.1, 7.3_
 
-- [ ] 15. Implement Discord channel integration
+- [x] 15. Implement Discord channel integration
   - Create src/channels/discord.rs with DiscordChannel
   - Implement websocket connection to Discord
   - Implement message receiving and sending
@@ -221,7 +227,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test message receiving and sending
     - _Requirements: 8.1, 8.3_
 
-- [ ] 16. Implement additional channel integrations
+- [x] 16. Implement additional channel integrations
   - Create src/channels/dingtalk.rs with DingTalkChannel
   - Create src/channels/line.rs with LineChannel
   - Create src/channels/qq.rs with QQChannel
@@ -232,14 +238,14 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test each channel's message handling
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
 
-- [ ] 17. Checkpoint - Verify channel integrations
+- [x] 17. Checkpoint - Verify channel integrations
   - Ensure all tests pass
   - Verify all channels can send and receive messages
   - Ask the user if questions arise
 
 ## Phase 4: LLM Providers (Weeks 8-10)
 
-- [ ] 18. Implement LLM provider framework
+- [x] 18. Implement LLM provider framework
   - Create src/llm/framework.rs with LlmProvider trait
   - Implement LlmManager in src/llm/mod.rs
   - Implement provider selection and fallback logic
@@ -258,7 +264,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 14: Rate limit retry success**
     - **Validates: Requirements 10.6**
 
-- [ ] 19. Implement OpenRouter LLM provider
+- [x] 19. Implement OpenRouter LLM provider
   - Create src/llm/openrouter.rs with OpenRouterProvider
   - Implement API request formatting
   - Implement response parsing
@@ -269,7 +275,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test API requests and response parsing
     - _Requirements: 11.1, 11.3_
 
-- [ ] 20. Implement Anthropic Claude LLM provider
+- [x] 20. Implement Anthropic Claude LLM provider
   - Create src/llm/claude.rs with ClaudeProvider
   - Implement API request formatting
   - Implement response parsing
@@ -280,7 +286,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test API requests and response parsing
     - _Requirements: 12.1, 12.3_
 
-- [ ] 21. Implement OpenAI LLM provider
+- [x] 21. Implement OpenAI LLM provider
   - Create src/llm/openai.rs with OpenAIProvider
   - Implement API request formatting
   - Implement response parsing
@@ -291,7 +297,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test API requests and response parsing
     - _Requirements: 13.1, 13.3_
 
-- [ ] 22. Implement additional LLM providers
+- [x] 22. Implement additional LLM providers
   - Create src/llm/gemini.rs with GeminiProvider
   - Create src/llm/zhipu.rs with ZhipuProvider
   - Create src/llm/deepseek.rs with DeepSeekProvider
@@ -302,20 +308,20 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test each provider's API integration
     - _Requirements: 14.1, 14.2, 14.3, 14.4_
 
-- [ ] 23. Checkpoint - Verify LLM providers
+- [x] 23. Checkpoint - Verify LLM providers
   - Ensure all tests pass
   - Verify all providers can generate responses
   - Ask the user if questions arise
 
 ## Phase 5: Tools System (Weeks 11-13)
 
-- [ ] 24. Implement tool framework and abstractions
+- [x] 24. Implement tool framework and abstractions
   - Create src/tools/framework.rs with Tool trait
   - Implement ToolRegistry in src/tools/mod.rs
   - Implement tool execution pipeline
   - _Requirements: 16.1, 17.1, 18.1, 19.1, 20.1, 21.1_
 
-- [ ] 25. Implement web search tools
+- [x] 25. Implement web search tools
   - Create src/tools/web_search.rs with WebSearchTool
   - Implement Brave Search integration
   - Implement DuckDuckGo integration
@@ -326,7 +332,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test search result parsing
     - _Requirements: 15.3, 15.4_
 
-- [ ] 26. Implement filesystem tool
+- [x] 26. Implement filesystem tool
   - Create src/tools/filesystem.rs with FilesystemTool
   - Implement file reading with size limits
   - Implement file writing with permission validation
@@ -342,7 +348,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 16: Path validation enforcement**
     - **Validates: Requirements 16.4**
 
-- [ ] 27. Implement shell execution tool
+- [x] 27. Implement shell execution tool
   - Create src/tools/shell.rs with ShellTool
   - Implement command execution with timeout
   - Implement output capture (stdout and stderr)
@@ -357,7 +363,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 18: Command timeout enforcement**
     - **Validates: Requirements 17.4**
 
-- [ ] 28. Implement web access tool
+- [x] 28. Implement web access tool
   - Create src/tools/web_access.rs with WebAccessTool
   - Implement HTTP GET requests
   - Implement redirect following
@@ -369,7 +375,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test HTTP requests and content extraction
     - _Requirements: 18.1, 18.3_
 
-- [ ] 29. Implement hardware interface tools
+- [x] 29. Implement hardware interface tools
   - Create src/tools/hardware.rs with HardwareTool
   - Implement I2C read/write operations
   - Implement SPI read/write operations
@@ -380,7 +386,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test I2C and SPI operations
     - _Requirements: 19.1, 19.3_
 
-- [ ] 30. Implement message tool
+- [x] 30. Implement message tool
   - Create src/tools/message.rs with MessageTool
   - Implement message sending to channels
   - Implement channel routing
@@ -391,7 +397,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test message sending and routing
     - _Requirements: 20.1, 20.2_
 
-- [ ] 31. Implement cron scheduling tool
+- [x] 31. Implement cron scheduling tool
   - Create src/tools/cron.rs with CronTool
   - Implement cron expression parsing
   - Implement schedule registration and execution
@@ -402,14 +408,14 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test cron expression parsing and execution
     - _Requirements: 21.1, 21.2_
 
-- [ ] 32. Checkpoint - Verify tools system
+- [x] 32. Checkpoint - Verify tools system
   - Ensure all tests pass
   - Verify all tools execute correctly
   - Ask the user if questions arise
 
 ## Phase 6: Integration and Optimization (Weeks 14-16)
 
-- [ ] 33. Implement backward compatibility layer
+- [x] 33. Implement backward compatibility layer
   - Create compatibility tests comparing Go and Rust versions
   - Verify CLI interface matches Go version
   - Verify configuration format compatibility
@@ -420,7 +426,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 1: Backward compatibility during transition**
     - **Validates: Requirements 1.2**
 
-- [ ] 34. Implement performance monitoring and optimization
+- [x] 34. Implement performance monitoring and optimization
   - Add boot time measurement
   - Add memory usage monitoring
   - Add message processing latency tracking
@@ -439,7 +445,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 25: Concurrent message handling**
     - **Validates: Requirements 27.5**
 
-- [ ] 35. Implement error recovery and resilience
+- [x] 35. Implement error recovery and resilience
   - Implement panic recovery with logging
   - Implement graceful degradation for failed components
   - Implement health check endpoints
@@ -449,7 +455,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - **Property 28: Graceful shutdown completeness**
     - **Validates: Requirements 28.5**
 
-- [ ] 36. Optimize binary size and dependencies
+- [x] 36. Optimize binary size and dependencies
   - Review and minimize dependencies
   - Enable LTO and symbol stripping in release builds
   - Profile binary size
@@ -460,7 +466,7 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Verify binary is suitable for embedded deployment
     - _Requirements: 27.3_
 
-- [ ] 37. Create comprehensive integration tests
+- [x] 37. Create comprehensive integration tests
   - Create end-to-end tests for complete workflows
   - Test channel-to-LLM-to-tool pipelines
   - Test error recovery scenarios
@@ -475,14 +481,14 @@ This implementation plan breaks down the PicoClaw Go-to-Rust conversion into dis
     - Test error handling and recovery
     - _Requirements: 5.5, 28.1, 28.2, 28.3_
 
-- [ ] 38. Create documentation and deployment guides
+- [x] 38. Create documentation and deployment guides
   - Write README with build and deployment instructions
   - Document configuration options
   - Document CLI interface
   - Create troubleshooting guide
   - _Requirements: 26.1, 26.2, 26.3_
 
-- [ ] 39. Final checkpoint - Verify complete system
+- [x] 39. Final checkpoint - Verify complete system
   - Ensure all tests pass (unit, integration, property)
   - Verify boot time < 1 second
   - Verify memory usage < 10MB

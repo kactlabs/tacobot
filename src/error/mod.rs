@@ -45,6 +45,9 @@ pub enum Error {
     #[error("Timeout error: {0}")]
     Timeout(String),
 
+    #[error("Runtime error: {0}")]
+    Runtime(String),
+
     #[error("Internal error: {0}")]
     Internal(String),
 
@@ -101,6 +104,11 @@ impl Error {
     /// Create a timeout error
     pub fn timeout(msg: impl Into<String>) -> Self {
         Error::Timeout(msg.into())
+    }
+
+    /// Create a runtime error
+    pub fn runtime(msg: impl Into<String>) -> Self {
+        Error::Runtime(msg.into())
     }
 
     /// Create an internal error

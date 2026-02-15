@@ -26,7 +26,7 @@ TacoBot is an ultra-lightweight personal AI Assistant designed to run on resourc
 
 ### Requirement 1: Phased Conversion Strategy
 
-**User Story:** As a maintainer, I want a clear phased approach to converting PicoClaw from Go to Rust, so that I can deliver working subsystems incrementally and manage risk.
+**User Story:** As a maintainer, I want a clear phased approach to converting TacoBot from Go to Rust, so that I can deliver working subsystems incrementally and manage risk.
 
 #### Acceptance Criteria
 

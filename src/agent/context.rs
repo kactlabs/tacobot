@@ -1,7 +1,6 @@
 //! Agent context management
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::time::SystemTime;
 
 /// Message role enumeration
