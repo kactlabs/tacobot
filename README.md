@@ -27,7 +27,7 @@
 
 🌍 **True Portability**: Single self-contained binary across RISC-V, ARM, and x86.
 
-🦀 **Rust-Powered**: Memory-safe, high-performance implementation with zero-cost abstractions.
+⚡ **High Performance**: Memory-safe, high-performance implementation with zero-cost abstractions.
 
 |                               | Traditional AI | PicoClaw (Go)            | **TacoBot (Rust)**                        |
 | ----------------------------- | -------------- | ------------------------ | ----------------------------------------- |
