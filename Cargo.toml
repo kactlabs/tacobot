@@ -141,7 +141,7 @@ panic = "abort"
 opt-level = 0
 
 [[bin]]
-name = "picoclaw"
+name = "tacobot"
 path = "src/main.rs"
 
 [lib]
