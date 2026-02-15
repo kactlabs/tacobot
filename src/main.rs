@@ -124,6 +124,7 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
     // Load config
     let home = std::env::var("HOME")?;
     let config_path = format!("{}/.tacobot/config.yaml", home);
+    let workspace_path = format!("{}/.tacobot/workspace", home);
     
     if !std::path::Path::new(&config_path).exists() {
         eprintln!("❌ Config not found: {}", config_path);
@@ -170,19 +171,29 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
             return Err("API key not configured".into());
         }
         
-        // Create LLM client and send message
-        let client = picoclaw::llm::LlmClient::new(&provider, &model, &api_key, &api_base);
+        // Create LLM client
+        let llm_client = picoclaw::llm::LlmClient::new(&provider, &model, &api_key, &api_base);
+        
+        // Create tool registry and register tools
+        let tool_registry = picoclaw::tools::ToolRegistry::new();
+        let write_file_tool = std::sync::Arc::new(
+            picoclaw::tools::WriteFileTool::new(workspace_path)
+        );
+        tool_registry.register(write_file_tool).await;
+        
+        // Create agent executor
+        let executor = picoclaw::agent::AgentExecutor::new(llm_client, tool_registry);
         
         println!("🤖 Processing: {}", msg);
         
-        match client.chat(&msg).await {
+        match executor.execute(&msg).await {
             Ok(response) => {
                 println!("{}", response);
                 info!("Response: {}", response);
             }
             Err(e) => {
                 eprintln!("❌ Error: {}", e);
-                return Err(Box::new(e));
+                return Err(e);
             }
         }
     } else {

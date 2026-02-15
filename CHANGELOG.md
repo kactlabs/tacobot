@@ -19,9 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## [0.2.0] - 2026-02-14
+## [0.2.0] - 2026-02-15
 
 ### Added
+- **TacoBot Rust Port Complete** - Full rewrite of PicoClaw in Rust for improved performance and memory safety
 - **Phase 1: Core Infrastructure**
   - Async runtime initialization with tokio (graceful shutdown, task pool)
   - Configuration management system (YAML/TOML/JSON support, environment variable overrides)
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Memory management subsystem with configurable eviction policies
   - Device manager for hardware interface management (I2C, SPI)
   - Agent loop with context management and message processing pipeline
+  - Tool execution system with full agent loop support
   - Property-based tests for PKCE validity, token persistence, and session isolation
 
 - **Phase 3: Channel Integrations**
@@ -49,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - LLM provider integration framework with provider selection and fallback logic
   - OpenRouter LLM provider with streaming support
   - Anthropic Claude LLM provider with streaming support
-  - OpenAI LLM provider with streaming support
+  - OpenAI LLM provider with streaming support and tool call parsing
   - Additional LLM providers (Gemini, Zhipu, DeepSeek, Groq)
   - Rate limit handling with retry logic
   - Property-based tests for request routing and provider fallback
@@ -74,24 +76,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Documentation and deployment guides
 
 ### Implementation Details
-- 37 required tasks completed across 6 phases
+- 39 required tasks completed across 6 phases
 - 47 tests passing (unit tests and property-based tests)
 - All correctness properties validated
 - Zero test failures
 - Compiles successfully with no errors
 - Target specifications met: <10MB RAM, <1 second boot time
-- Crate name: "picoclaw" (tacobot project)
+- Binary name: "tacobot" (Rust implementation)
+- Full feature parity with PicoClaw Go version
 
 ### Changed
 - Cargo.toml updated with all required dependencies and feature flags
 - Release profile configured for embedded deployment (LTO, strip symbols)
 - Core module structure established (agent, auth, channels, config, device, error, llm, logging, session, tools)
+- README updated with Rust-specific build and deployment instructions
+- Configuration format updated to YAML (from JSON)
 
 ### Security
 - PKCE implementation for secure OAuth2 flow
 - Command whitelist validation for shell execution
 - Path validation for filesystem operations
 - Environment variable override support for sensitive configuration
+- Memory-safe Rust implementation eliminates entire classes of vulnerabilities
 
 ## [0.1.0] - 2024-02-14
 

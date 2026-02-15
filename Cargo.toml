@@ -1,10 +1,10 @@
 [package]
 name = "picoclaw"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-description = "Ultra-lightweight personal AI Assistant for embedded systems"
+description = "Ultra-lightweight personal AI Assistant for embedded systems - Rust port"
 license = "MIT"
-repository = "https://github.com/picoclaw/picoclaw-rust"
+repository = "https://github.com/sipeed/picoclaw"
 
 [dependencies]
 # Async runtime

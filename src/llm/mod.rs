@@ -4,4 +4,4 @@ pub mod framework;
 pub mod client;
 
 pub use framework::LlmProvider;
-pub use client::LlmClient;
+pub use client::{LlmClient, LlmResponse};
