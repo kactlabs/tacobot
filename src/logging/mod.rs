@@ -1,3 +1,3 @@
-//! Logging and tracing setup for PicoClaw
+//! Logging and tracing setup for TacoBot
 
 pub mod setup;

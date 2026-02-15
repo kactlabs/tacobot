@@ -1,4 +1,4 @@
-//! Authentication system for PicoClaw (OAuth2 and PKCE)
+//! Authentication system for TacoBot (OAuth2 and PKCE)
 
 pub mod oauth2;
 pub mod pkce;

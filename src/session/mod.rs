@@ -1,4 +1,4 @@
-//! Session management for PicoClaw
+//! Session management for TacoBot
 
 pub mod manager;
 pub mod store;

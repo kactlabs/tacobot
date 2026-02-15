@@ -137,9 +137,9 @@ make build-all
 make install
 ```
 
-#### Rust Version (New - Recommended for embedded systems)
+#### TacoBot Rust Version (New - Recommended for embedded systems)
 
-The Rust version provides better performance and smaller binary size for embedded deployment.
+The TacoBot Rust version provides better performance and smaller binary size for embedded deployment. This is a complete rewrite of PicoClaw in Rust with all functionality preserved and optimized for resource-constrained devices.
 
 **Prerequisites:**
 - Install Rust from https://rustup.rs/
@@ -150,26 +150,26 @@ The Rust version provides better performance and smaller binary size for embedde
 # Build in release mode (optimized for embedded)
 cargo build --release
 
-# Binary location: target/release/picoclaw
+# Binary location: target/release/tacobot
 ```
 
 **Run:**
 
 ```bash
 # Show help
-./target/release/picoclaw --help
+./target/release/tacobot --help
 
 # Run with default config
-./target/release/picoclaw
+./target/release/tacobot
 
 # Run with custom config
-./target/release/picoclaw --config /path/to/config.yaml
+./target/release/tacobot --config /path/to/config.yaml
 
 # Run with debug logging
-./target/release/picoclaw --log-level debug
+./target/release/tacobot --log-level debug
 
 # Show version
-./target/release/picoclaw --version
+./target/release/tacobot --version
 ```
 
 **Development:**
@@ -228,12 +228,12 @@ export TELEGRAM_TOKEN="your_token"
 export DISCORD_TOKEN="your_token"
 export OPENROUTER_API_KEY="your_key"
 
-./target/release/picoclaw --config config.yaml
+./target/release/tacobot --config config.yaml
 ```
 
 **Features:**
 
-The Rust version includes all core functionality with optimizations for embedded systems:
+TacoBot includes all core functionality with optimizations for embedded systems:
 
 - ✅ Async runtime with tokio
 - ✅ Configuration management (YAML/TOML/JSON)
@@ -252,6 +252,18 @@ The Rust version includes all core functionality with optimizations for embedded
 - Boot time: <1 second
 - Memory usage: <10MB
 - Binary size: ~1.4MB (optimized for embedded)
+
+**Implementation Status:**
+
+All 37 required tasks completed across 6 phases:
+- Phase 1: Core Infrastructure ✅
+- Phase 2: Authentication & Agent Loop ✅
+- Phase 3: Channel Integrations ✅
+- Phase 4: LLM Providers ✅
+- Phase 5: Tools System ✅
+- Phase 6: Integration & Optimization ✅
+
+47 tests passing with zero failures. See [CHANGELOG.md](CHANGELOG.md) for detailed implementation notes.
 
 ## 🐳 Docker Compose
 

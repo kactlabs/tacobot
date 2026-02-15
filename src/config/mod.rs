@@ -1,4 +1,4 @@
-//! Configuration management for PicoClaw
+//! Configuration management for TacoBot
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;

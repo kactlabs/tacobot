@@ -1,4 +1,4 @@
-//! Channel integrations for PicoClaw
+//! Channel integrations for TacoBot
 
 pub mod framework;
 

@@ -1,6 +1,6 @@
-//! PicoClaw - Ultra-lightweight personal AI Assistant for embedded systems
+//! TacoBot - Ultra-lightweight personal AI Assistant for embedded systems
 //!
-//! This library provides the core functionality for PicoClaw, including:
+//! This library provides the core functionality for TacoBot, including:
 //! - Async runtime management
 //! - Configuration loading and validation
 //! - Authentication (OAuth2 with PKCE)

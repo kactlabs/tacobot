@@ -1,6 +1,6 @@
-//! PicoClaw CLI entry point
+//! TacoBot CLI entry point
 //!
-//! This is the main executable for PicoClaw, providing command-line interface
+//! This is the main executable for TacoBot, providing command-line interface
 //! and initialization of the system.
 
 use clap::Parser;
@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use tracing::info;
 
 #[derive(Parser, Debug)]
-#[command(name = "picoclaw")]
+#[command(name = "tacobot")]
 #[command(about = "Ultra-lightweight personal AI Assistant for embedded systems", long_about = None)]
 #[command(version)]
 #[command(author)]
@@ -35,14 +35,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
     if args.version {
-        println!("picoclaw {}", env!("CARGO_PKG_VERSION"));
+        println!("tacobot {}", env!("CARGO_PKG_VERSION"));
         return Ok(());
     }
 
     // Initialize logging
     picoclaw::logging::setup::init_logging(&args.log_level)?;
 
-    info!("Starting PicoClaw v{}", env!("CARGO_PKG_VERSION"));
+    info!("Starting TacoBot v{}", env!("CARGO_PKG_VERSION"));
     info!("Configuration file: {:?}", args.config);
 
     // TODO: Load configuration
@@ -50,7 +50,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO: Start agent loop
     // TODO: Connect to channels
 
-    info!("PicoClaw started successfully");
+    info!("TacoBot started successfully");
 
     Ok(())
 }

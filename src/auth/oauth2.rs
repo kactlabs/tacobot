@@ -1,4 +1,4 @@
-//! OAuth2 implementation for PicoClaw
+//! OAuth2 implementation for TacoBot
 
 use serde::{Deserialize, Serialize};
 

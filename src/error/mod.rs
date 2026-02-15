@@ -1,4 +1,4 @@
-//! Error types and handling for PicoClaw
+//! Error types and handling for TacoBot
 
 use thiserror::Error;
 
@@ -6,10 +6,10 @@ pub mod types;
 
 pub use types::PicoClawError;
 
-/// Result type for PicoClaw operations
+/// Result type for TacoBot operations
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Main error type for PicoClaw
+/// Main error type for TacoBot
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Configuration error: {0}")]
