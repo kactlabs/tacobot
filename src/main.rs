@@ -173,7 +173,7 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
         // Create LLM client and send message
         let client = picoclaw::llm::LlmClient::new(&provider, &model, &api_key, &api_base);
         
-        println!("🦞 Processing: {}", msg);
+        println!("🤖 Processing: {}", msg);
         
         match client.chat(&msg).await {
             Ok(response) => {
@@ -187,7 +187,7 @@ async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error:
         }
     } else {
         info!("Starting interactive agent mode");
-        println!("🦞 TacoBot Interactive Mode");
+        println!("🤖 TacoBot Interactive Mode");
         println!("Type 'exit' to quit\n");
         
         // TODO: Start interactive REPL
