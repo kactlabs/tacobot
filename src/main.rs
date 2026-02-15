@@ -121,16 +121,77 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 async fn handle_agent(message: Option<String>) -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting agent");
 
+    // Load config
+    let home = std::env::var("HOME")?;
+    let config_path = format!("{}/.tacobot/config.yaml", home);
+    
+    if !std::path::Path::new(&config_path).exists() {
+        eprintln!("❌ Config not found: {}", config_path);
+        eprintln!("Run 'tacobot onboard' first to initialize");
+        return Err("Config file not found".into());
+    }
+
+    let config_content = std::fs::read_to_string(&config_path)?;
+    info!("Loaded config from: {}", config_path);
+
     if let Some(msg) = message {
         info!("Processing message: {}", msg);
-        println!("Agent received: {}", msg);
-        // TODO: Process message through agent loop
-        // TODO: Call LLM provider
-        // TODO: Return response
+        
+        // Parse YAML config
+        let config: serde_yaml::Value = serde_yaml::from_str(&config_content)?;
+        
+        let provider = config["agents"]["defaults"]["provider"]
+            .as_str()
+            .unwrap_or("openrouter")
+            .to_string();
+        
+        let model = config["agents"]["defaults"]["model"]
+            .as_str()
+            .unwrap_or("meta-llama/llama-2-70b-chat")
+            .to_string();
+        
+        // Get API key and base from provider config
+        let provider_config = &config["providers"][&provider];
+        let api_key = provider_config["api_key"]
+            .as_str()
+            .unwrap_or("")
+            .to_string();
+        
+        let api_base = provider_config["api_base"]
+            .as_str()
+            .unwrap_or("https://openrouter.ai/api/v1")
+            .to_string();
+        
+        info!("Using provider: {}, model: {}", provider, model);
+        
+        if api_key.is_empty() {
+            eprintln!("❌ API key not configured for provider: {}", provider);
+            eprintln!("Set the API key in ~/.tacobot/config.yaml under providers.{}.api_key", provider);
+            return Err("API key not configured".into());
+        }
+        
+        // Create LLM client and send message
+        let client = picoclaw::llm::LlmClient::new(&provider, &model, &api_key, &api_base);
+        
+        println!("🦞 Processing: {}", msg);
+        
+        match client.chat(&msg).await {
+            Ok(response) => {
+                println!("{}", response);
+                info!("Response: {}", response);
+            }
+            Err(e) => {
+                eprintln!("❌ Error: {}", e);
+                return Err(Box::new(e));
+            }
+        }
     } else {
         info!("Starting interactive agent mode");
-        println!("Interactive agent mode (not yet implemented)");
+        println!("🦞 TacoBot Interactive Mode");
+        println!("Type 'exit' to quit\n");
+        
         // TODO: Start interactive REPL
+        println!("(Interactive mode not yet implemented)");
     }
 
     Ok(())
@@ -191,25 +252,57 @@ async fn handle_onboard() -> Result<(), Box<dyn std::error::Error>> {
     
     // Create default config if it doesn't exist
     if !std::path::Path::new(&config_path).exists() {
-        let default_config = r#"agent:
-  max_context_size: 8192
-  timeout_ms: 5000
-  memory_limit_mb: 10
+        let default_config = r#"# TacoBot Configuration
+# Ultra-lightweight personal AI Assistant for embedded systems
+
+agents:
+  defaults:
+    workspace: "~/.tacobot/workspace"
+    restrict_to_workspace: true
+    provider: "openrouter"
+    model: "meta-llama/llama-2-70b-chat"
+    max_tokens: 8192
+    temperature: 0.7
+    max_tool_iterations: 20
 
 channels:
   telegram:
     enabled: false
     token: ""
+    allow_from: []
+  
   discord:
     enabled: false
     token: ""
+    allow_from: []
 
-llm:
-  default_provider: "openrouter"
-  providers:
-    openrouter:
+providers:
+  openrouter:
+    api_key: ""
+    api_base: "https://openrouter.ai/api/v1"
+  
+  anthropic:
+    api_key: ""
+    api_base: "https://api.anthropic.com"
+  
+  openai:
+    api_key: ""
+    api_base: "https://api.openai.com/v1"
+
+tools:
+  web:
+    brave:
+      enabled: true
       api_key: ""
-      model: "meta-llama/llama-2-70b-chat"
+      max_results: 5
+    
+    duckduckgo:
+      enabled: true
+      max_results: 5
+
+heartbeat:
+  enabled: true
+  interval: 30
 
 logging:
   level: "info"
