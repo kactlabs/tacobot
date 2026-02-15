@@ -1,12 +1,12 @@
-# PicoClaw Go-to-Rust Conversion Requirements
+# TacoBot Go-to-Rust Conversion Requirements
 
 ## Introduction
 
-PicoClaw is an ultra-lightweight personal AI Assistant designed to run on resource-constrained embedded systems ($10 hardware with <10MB RAM, <1 second boot time). This specification defines requirements for converting the existing Go implementation to Rust while maintaining all functionality, performance characteristics, and API compatibility. The conversion will be executed in phases, with each phase delivering a complete, testable subsystem.
+TacoBot is an ultra-lightweight personal AI Assistant designed to run on resource-constrained embedded systems ($10 hardware with <10MB RAM, <1 second boot time). This specification defines requirements for converting the existing Go implementation to Rust while maintaining all functionality, performance characteristics, and API compatibility. The conversion will be executed in phases, with each phase delivering a complete, testable subsystem.
 
 ## Glossary
 
-- **PicoClaw**: The ultra-lightweight personal AI Assistant system
+- **TacoBot**: The ultra-lightweight personal AI Assistant system
 - **Agent_Loop**: The core execution engine that processes user messages, manages context, and orchestrates tool execution
 - **Channel**: A communication platform integration (Telegram, Discord, DingTalk, LINE, QQ, WhatsApp)
 - **LLM_Provider**: An external language model service (OpenRouter, Zhipu, Anthropic, OpenAI, Gemini, DeepSeek, Groq)
