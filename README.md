@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="assets/logo.jpg" alt="TacoBot" width="512">
 
   <h1>TacoBot: Ultra-Efficient AI Assistant in Rust</h1>
 
@@ -10,8 +9,6 @@
     <img src="https://img.shields.io/badge/Arch-x86__64%2C%20ARM64%2C%20RISC--V-blue" alt="Hardware">
     <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   </p>
-
- [中文](README.zh.md) | [日本語](README.ja.md) | **English**
 </div>
 
 ---
