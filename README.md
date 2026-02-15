@@ -47,8 +47,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/sipeed/picoclaw.git
-cd picoclaw
+git clone git@github.com:kactlabs/tacobot.git
+cd tacobot
 
 # Build in release mode (optimized for embedded)
 cargo build --release
