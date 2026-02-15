@@ -12,6 +12,10 @@ build/
 /picoclaw-test
 cmd/picoclaw/workspace
 
+# Rust build artifacts
+target/
+Cargo.lock
+
 # Picoclaw specific
 
 # PicoClaw
